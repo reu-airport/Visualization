@@ -1,6 +1,6 @@
-# visualization Airport
+# Visualization airport
 
-##deploy service:
+## Deploy service:
 ____
 `npm i`
 ____
