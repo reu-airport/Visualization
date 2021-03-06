@@ -1,6 +1,6 @@
 import "phaser";
 import GameConfig = Phaser.Types.Core.GameConfig;
-
+import { MainScene } from "./scenes/mainScene"
 export const config: GameConfig = {
     title: "Airport",
     width: "100%",
@@ -9,8 +9,10 @@ export const config: GameConfig = {
     dom: {
         createContainer: true
     },
-    scene: [ ],
-    backgroundColor: "#18216D",
+    scene: [
+        MainScene
+    ],
+    backgroundColor: '#108e51',
     physics: {
         default: "arcade",
         arcade: {
