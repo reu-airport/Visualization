@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack --watch & live-server --port=8080",
+    "dev": "webpack --watch & node server.ts",
     "prod": "node server.ts"
   },
   "repository": {
