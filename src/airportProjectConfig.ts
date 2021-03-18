@@ -3,8 +3,8 @@ import GameConfig = Phaser.Types.Core.GameConfig;
 import { MainScene } from "./scenes/mainScene"
 export const config: GameConfig = {
     title: "Airport",
-    width: "100%",
-    height: "100px",
+    width: 1300,
+    height: 770,
     parent: "airport",
     dom: {
         createContainer: true

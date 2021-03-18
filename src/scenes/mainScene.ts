@@ -1,5 +1,10 @@
 import "phaser";
 import Game = Phaser.Game;
+import {Terminal} from "../entities/terminal";
+import {BusStation} from "../entities/busStation";
+import {AirplaneStation} from "../entities/airplaneStation";
+import {RunwayStrip} from "../entities/runwayStrip";
+import {Roads} from "../entities/roads";
 
 export class MainScene extends Phaser.Scene {
 
@@ -16,11 +21,20 @@ export class MainScene extends Phaser.Scene {
     }
 
     preload(): void {
+        RunwayStrip.preload(this, 'runaway_strip');
+        AirplaneStation.preload(this, 'airplane_station');
+        Roads.preload(this, 'roads');
+        Terminal.preload(this, 'terminal');
+        BusStation.preload(this, 'bus_station');
 
     }
 
     create(): void {
-        this.rect =  this.add.rectangle(200, 200, 148, 148, 0x000000);
+        RunwayStrip.setPosition(this, 'runaway_strip');
+        AirplaneStation.setPosition(this, 'airplane_station');
+        Roads.setPosition(this, 'roads');
+        BusStation.setPosition(this, 'bus_station');
+        Terminal.setPosition(this, 'terminal');
     }
 
      changePositionRect(x: number, y: number) {

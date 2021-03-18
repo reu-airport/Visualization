@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "dev": "webpack --watch & node server.ts",
-    "prod": "webpack & node server.ts"
+    "dev": "webpack --watch & node server.js",
+    "prod": "webpack & node server.js"
   },
   "repository": {
     "type": "git",
