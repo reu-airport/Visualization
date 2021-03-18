@@ -23,18 +23,18 @@ export class MainScene extends Phaser.Scene {
     preload(): void {
         RunwayStrip.preload(this, 'runaway_strip');
         AirplaneStation.preload(this, 'airplane_station');
-        Roads.preload(this, 'roads');
         Terminal.preload(this, 'terminal');
         BusStation.preload(this, 'bus_station');
+        Roads.preload(this, 'roads');
 
     }
 
     create(): void {
         RunwayStrip.setPosition(this, 'runaway_strip');
         AirplaneStation.setPosition(this, 'airplane_station');
-        Roads.setPosition(this, 'roads');
         BusStation.setPosition(this, 'bus_station');
         Terminal.setPosition(this, 'terminal');
+        Roads.setPosition(this, 'roads');
     }
 
      changePositionRect(x: number, y: number) {
