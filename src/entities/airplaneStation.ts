@@ -10,8 +10,8 @@ export class AirplaneStation {
 
     public static setPosition(context: Phaser.Scene, key: string) {
         this.airplaneStationObject = context.add.image(0, 0, key);
-        this.airplaneStationObject.setScale(0.7, 0.7);
-        this.airplaneStationObject.setY(187);
-        this.airplaneStationObject.setX(context.cameras.main.width - 265);
+        this.airplaneStationObject.setScale(0.8, 0.6);
+        this.airplaneStationObject.setY(137);
+        this.airplaneStationObject.setX(context.cameras.main.width - 276);
     }
 }

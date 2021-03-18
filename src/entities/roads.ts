@@ -10,8 +10,8 @@ export class Roads {
 
     public static setPosition(context: Phaser.Scene, key: string) {
         this.roadsObject = context.add.image(0, 0, key);
-        this.roadsObject.setScale(0.7, 0.7);
-        this.roadsObject.setY(427.5);
+        this.roadsObject.setScale(0.65, 0.65);
+        this.roadsObject.setY(308.5);
         this.roadsObject.setX(461.5);
 
     }

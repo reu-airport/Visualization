@@ -4,7 +4,7 @@ import { MainScene } from "./scenes/mainScene"
 export const config: GameConfig = {
     title: "Airport",
     width: 1300,
-    height: 770,
+    height: 635,
     parent: "airport",
     dom: {
         createContainer: true

@@ -10,9 +10,9 @@ export class RunwayStrip {
 
     public static setPosition(context: Phaser.Scene, key: string) {
         this.runawayStripObject = context.add.image(0, 0, key);
-        this.runawayStripObject.setScale(0.7, 0.7);
-        this.runawayStripObject.setY(210.5);
-        this.runawayStripObject.setX(this.runawayStripObject.width / 3);
+        this.runawayStripObject.setScale(0.66, 0.64);
+        this.runawayStripObject.setY(108.5);
+        this.runawayStripObject.setX(414);
 
     }
 }

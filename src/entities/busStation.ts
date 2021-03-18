@@ -10,9 +10,9 @@ export class BusStation {
 
     public static setPosition(context: Phaser.Scene, key: string) {
         this.busStationObject = context.add.image(0, 0, key);
-        this.busStationObject.setScale(0.7, 0.7);
-        this.busStationObject.setY(context.cameras.main.height - this.busStationObject.height * 0.6 / 2 - 40);
-        this.busStationObject.setX(context.cameras.main.width - 225);
+        this.busStationObject.setScale(0.6, 0.6);
+        this.busStationObject.setY(context.cameras.main.height - this.busStationObject.height * 0.6 / 2 - 20);
+        this.busStationObject.setX(context.cameras.main.width - 284);
 
     }
 }
