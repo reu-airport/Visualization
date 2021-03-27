@@ -1,0 +1,4 @@
+
+interface BuilderTextures {
+    preload()
+}
