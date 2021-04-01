@@ -1,18 +1,18 @@
 
 export class Point {
 
-    private X: number;
-    private Y: number;
+    protected X: number;
+    protected Y: number;
+    protected numberPoint: number;
 
-    public get getX(): number {
-        return this.X;
-    }
+    public get getX(): number { return this.X; }
+    public get getY(): number { return this.Y; }
+    public get getNumberPoint(): number { return this.numberPoint }
 
-    public get getY(): number {
-        return this.Y;
-    }
-
-    constructor() {
+    constructor(X: number, Y: number, numberPoint: number) {
+        this.X = X;
+        this.Y = Y;
+        this.numberPoint = numberPoint;
     }
 
 
