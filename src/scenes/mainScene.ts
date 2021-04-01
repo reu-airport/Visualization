@@ -35,6 +35,8 @@ export class MainScene extends Phaser.Scene {
         BusStation.setPosition(this);
         Terminal.setPosition(this, 'terminal');
         Roads.setPosition(this, 'roads');
+        BusStation.getInstancePoints();
+        BusStation.drawPoints(this);
     }
 
      changePositionRect(x: number, y: number) {

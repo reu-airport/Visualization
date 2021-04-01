@@ -1,5 +1,5 @@
 import "phaser";
-import Point = Phaser.Geom.Point;
+import {Point} from "../graph/point";
 
 export abstract class Location {
 
@@ -9,20 +9,23 @@ export abstract class Location {
     protected static scaleObjectY: number;
     protected static locationX0: number;
     protected static locationY0: number;
-    protected static points: Point[];
 
     public static keyObject;
+    public static points: Point[];
     public static get getLocationX0(): number { return Location.locationX0 }
     public static get getLocationY0(): number { return Location.locationY0 }
 
 
-    protected static initialize({asset_path, key, locationX0, locationY0, scaleX, scaleY, points}) {
+    protected static initialize({asset_path, key, locationX0, locationY0, scaleX, scaleY}) {
         Location.asset_path = asset_path;
         Location.keyObject = key;
         Location.scaleObjectX = scaleX;
         Location.scaleObjectY = scaleY;
         Location.locationX0 = locationX0;
         Location.locationY0 = locationY0;
+    }
+
+    protected static initializePoints(points: Point[]) {
         Location.points = points;
     }
 
@@ -39,13 +42,20 @@ export abstract class Location {
 
     public static getInstance() { }
 
+    public static drawPoints(context: Phaser.Scene) {
+        this.points.forEach( (point) => {
+            point.drawPoint(context);
+        })
+    }
+
     protected  static setPointX(xPoint: number): number {
-        return Location.locationX0 + xPoint;
+        return Location.getLocationX0 - xPoint;
     }
 
     protected static setPointY(yPoint: number): number {
-        return Location.locationY0 + yPoint;
+        return Location.getLocationY0 - yPoint;
     }
+
 }
 
 

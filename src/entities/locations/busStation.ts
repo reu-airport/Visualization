@@ -10,11 +10,14 @@ export class BusStation extends Location {
              locationX0: 1020,
              locationY0: 440,
              scaleX: 0.6,
-             scaleY: 0.6,
-             points: [
-                new Point(this.setPointX(10), this.setPointX(20), 1)
-             ]
+             scaleY: 0.6
            }
-       )
+       );
+    }
+
+    public static getInstancePoints() {
+        this.initializePoints([
+            new Point(this.setPointX(0), this.setPointY(0), 1, this)
+        ]);
     }
 }
