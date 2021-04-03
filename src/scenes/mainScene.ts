@@ -18,25 +18,42 @@ export class MainScene extends Phaser.Scene {
 
     init(): void {
         BusStation.getInstance();
+        Terminal.getInstance();
+        Roads.getInstance();
+        AirplaneStation.getInstance();
+        RunwayStrip.getInstance();
     }
 
     preload(): void {
-        RunwayStrip.preload(this, 'runaway_strip');
-        AirplaneStation.preload(this, 'airplane_station');
-        Terminal.preload(this, 'terminal');
+        RunwayStrip.preload(this);
+        AirplaneStation.preload(this);
+        Terminal.preload(this);
         BusStation.preload(this);
-        Roads.preload(this, 'roads');
+        Roads.preload(this);
 
     }
 
     create(): void {
-        RunwayStrip.setPosition(this, 'runaway_strip');
-        AirplaneStation.setPosition(this, 'airplane_station');
+        RunwayStrip.setPosition(this);
+        AirplaneStation.setPosition(this);
         BusStation.setPosition(this);
-        Terminal.setPosition(this, 'terminal');
-        Roads.setPosition(this, 'roads');
+        Terminal.setPosition(this);
+        Roads.setPosition(this);
+        
         BusStation.getInstancePoints();
-        BusStation.drawPoints(this);
+        //BusStation.drawPoints(this);
+
+        Terminal.getInstancePoints();
+        //Terminal.drawPoints(this);
+
+        Roads.getInstancePoints();
+        //Roads.drawPoints(this);
+
+        AirplaneStation.getInstancePoints();
+        //AirplaneStation.drawPoints(this);
+
+        RunwayStrip.getInstancePoints();
+        RunwayStrip.drawPoints(this);
     }
 
      changePositionRect(x: number, y: number) {
