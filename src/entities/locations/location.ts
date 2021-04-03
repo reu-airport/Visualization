@@ -1,5 +1,6 @@
 import "phaser";
-import {Point} from "../graph/point";
+import {Point} from "../points/point";
+import {ListPoints} from "../points/listPoints";
 
 export abstract class Location {
 
@@ -27,11 +28,10 @@ export abstract class Location {
 
     protected initializePoints(points: Point[]) {
         this.points = points;
+        ListPoints.setPoints = points;
     }
 
     public preload(context: Phaser.Scene) {
-        console.log(this.keyObject);
-        console.log(this.asset_path);
         context.load.image(this.keyObject, this.asset_path);
     }
 

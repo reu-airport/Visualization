@@ -1,6 +1,6 @@
 import "phaser";
-import {Location} from "./location";
-import {Point} from "../graph/point";
+import {Location} from "../location";
+import {Point} from "../../points/point";
 
 export class AirplaneStation extends Location {
 

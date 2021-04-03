@@ -1,10 +1,10 @@
 import "phaser";
 import Game = Phaser.Game;
-import {Terminal} from "../entities/locations/terminal";
-import {BusStation} from "../entities/locations/busStation";
-import {AirplaneStation} from "../entities/locations/airplaneStation";
-import {RunwayStrip} from "../entities/locations/runwayStrip";
-import {Roads} from "../entities/locations/roads";
+import {Terminal} from "../entities/locations/impl/terminal";
+import {BusStation} from "../entities/locations/impl/busStation";
+import {AirplaneStation} from "../entities/locations/impl/airplaneStation";
+import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
+import {Roads} from "../entities/locations/impl/roads";
 
 export class MainScene extends Phaser.Scene {
 
