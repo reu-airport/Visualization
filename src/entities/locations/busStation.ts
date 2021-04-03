@@ -15,13 +15,14 @@ export class BusStation extends Location {
             BusStation.busStation.initialize({
                 asset_path: 'src/assets/bus_station.png',
                 key: 'bus_station',
-                locationX0: 1020,
-                locationY0: 440,
-                scaleX: 0.6,
-                scaleY: 0.6
+                locationX0: 1001,
+                locationY0: 430,
+                scaleX: 0.61,
+                scaleY: 0.61
                 });
             BusStation.busStation.initializePoints([
-                    new Point(BusStation.busStation.setPointX(0), BusStation.busStation.setPointY(0), 1, BusStation.busStation)
+                    new Point(BusStation.busStation.setPointX(10), BusStation.busStation.setPointY(30), 12, BusStation.busStation),
+                    new Point(BusStation.busStation.setPointX(3), BusStation.busStation.setPointY(150), 11, BusStation.busStation)
                 ]);
             }
             return BusStation.busStation;

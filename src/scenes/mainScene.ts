@@ -10,6 +10,9 @@ export class MainScene extends Phaser.Scene {
 
     private busStation: BusStation;
     private terminal: Terminal;
+    private airplaneStation: AirplaneStation;
+    private runwayStrip: RunwayStrip;
+    private roads: Roads;
 
     constructor() {
         super({
@@ -20,19 +23,34 @@ export class MainScene extends Phaser.Scene {
     init(): void {
         this.busStation = BusStation.getInstance();
         this.terminal = Terminal.getInstance();
+        this.airplaneStation = AirplaneStation.getInstance();
+        this.runwayStrip = RunwayStrip.getInstance();
+        this.roads = Roads.getInstance();
     }
 
     preload(): void {
-        this.busStation.preload(this);
         this.terminal.preload(this);
+        this.busStation.preload(this);
+        this.airplaneStation.preload(this);
+        this.runwayStrip.preload(this);
+        this.roads.preload(this);
     }
 
     create(): void {
+        this.runwayStrip.setPosition(this);
+        this.runwayStrip.drawPoints(this);
+
+        this.airplaneStation.setPosition(this);
+        this.airplaneStation.drawPoints(this);
+
         this.busStation.setPosition(this);
         this.busStation.drawPoints(this);
 
         this.terminal.setPosition(this);
         this.terminal.drawPoints(this);
+
+        this.roads.setPosition(this);
+        this.roads.drawPoints(this);
 
     }
 
