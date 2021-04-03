@@ -1,10 +1,11 @@
 import "phaser";
-import Game = Phaser.Game;
 import {Terminal} from "../entities/locations/impl/terminal";
 import {BusStation} from "../entities/locations/impl/busStation";
 import {AirplaneStation} from "../entities/locations/impl/airplaneStation";
 import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
+import {Vehicle} from "../entities/transports/impl/vehicle";
+import {TypesVehicle} from "../entities/transports/typesVehicle";
 
 export class MainScene extends Phaser.Scene {
 
@@ -13,6 +14,7 @@ export class MainScene extends Phaser.Scene {
     private airplaneStation: AirplaneStation;
     private runwayStrip: RunwayStrip;
     private roads: Roads;
+    private busPassage: Vehicle;
 
     constructor() {
         super({
@@ -26,6 +28,7 @@ export class MainScene extends Phaser.Scene {
         this.airplaneStation = AirplaneStation.getInstance();
         this.runwayStrip = RunwayStrip.getInstance();
         this.roads = Roads.getInstance();
+        this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
     }
 
     preload(): void {
@@ -34,9 +37,13 @@ export class MainScene extends Phaser.Scene {
         this.airplaneStation.preload(this);
         this.runwayStrip.preload(this);
         this.roads.preload(this);
+
+        this.busPassage.preload(this);
+
     }
 
     create(): void {
+
         this.runwayStrip.setPosition(this);
         this.runwayStrip.drawPoints(this);
 
@@ -51,6 +58,9 @@ export class MainScene extends Phaser.Scene {
 
         this.roads.setPosition(this);
         this.roads.drawPoints(this);
+     //   this.physics.moveToObject(this.busPassage.getTransportObject, this.runwayStrip, 10, 100);
+
+        this.busPassage.setPosition(this);
 
     }
 

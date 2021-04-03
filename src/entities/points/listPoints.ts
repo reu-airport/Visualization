@@ -15,9 +15,12 @@ export class ListPoints {
     }
 
      public static getPointByNumber(number: number): Point {
-          this.points.forEach((point, index) => {
-               if (point.getNumberPoint == number) return this.points[index];
-          });
+
+         for (let i = 0; i < this.points.length; i++) {
+             if (this.points[i].getNumberPoint == number) {
+                 return this.points[i];
+             }
+         }
           return null;
      }
 
