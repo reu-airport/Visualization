@@ -8,41 +8,34 @@ import {Roads} from "../entities/locations/roads";
 
 export class MainScene extends Phaser.Scene {
 
-    private rect: Phaser.GameObjects.Rectangle;
+    private busStation: BusStation;
+    private terminal: Terminal;
 
     constructor() {
         super({
             key: 'mainScene'
-        })
+        });
     }
 
     init(): void {
-        BusStation.getInstance();
+        this.busStation = BusStation.getInstance();
+        this.terminal = Terminal.getInstance();
     }
 
     preload(): void {
-        RunwayStrip.preload(this, 'runaway_strip');
-        AirplaneStation.preload(this, 'airplane_station');
-        Terminal.preload(this, 'terminal');
-        BusStation.preload(this);
-        Roads.preload(this, 'roads');
-
+        this.busStation.preload(this);
+        this.terminal.preload(this);
     }
 
     create(): void {
-        RunwayStrip.setPosition(this, 'runaway_strip');
-        AirplaneStation.setPosition(this, 'airplane_station');
-        BusStation.setPosition(this);
-        Terminal.setPosition(this, 'terminal');
-        Roads.setPosition(this, 'roads');
-        BusStation.getInstancePoints();
-        BusStation.drawPoints(this);
+        this.busStation.setPosition(this);
+        this.busStation.drawPoints(this);
+
+        this.terminal.setPosition(this);
+        this.terminal.drawPoints(this);
+
     }
 
-     changePositionRect(x: number, y: number) {
-        this.rect.setX(x);
-        this.rect.setY(y);
-    }
 
     update(time: number, delta: number): void {
         super.update(time, delta);

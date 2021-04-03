@@ -1,18 +1,30 @@
 import "phaser";
+import {Location} from "./location";
+import {Point} from "../graph/point";
 
-export class Terminal {
-    private static asset_path: string = 'src/assets/terminal.png';
-    private static terminalObject: Phaser.GameObjects.Image;
+export class Terminal extends Location {
 
-    public static preload(context: Phaser.Scene, key: string) {
-       context.load.image(key, this.asset_path);
-    }
+    private static terminal: Terminal;
 
-    public static setPosition(context: Phaser.Scene, key: string) {
-       this.terminalObject = context.add.image(0, 0, key);
-       this.terminalObject.setScale(0.65, 0.65);
-       this.terminalObject.setY(context.cameras.main.height - this.terminalObject.height * 0.6 / 2);
-       this.terminalObject.setX(500);
+    private constructor() { super() }
 
+    public static getInstance(): Location {
+        if (!Terminal.terminal) {
+            Terminal.terminal = new Terminal();
+
+            Terminal.terminal.initialize({
+                asset_path: 'src/assets/terminal.png',
+                key: 'terminal',
+                locationX0: 528,
+                locationY0: 512,
+                scaleX: 0.6,
+                scaleY: 0.6
+            });
+            Terminal.terminal.initializePoints([
+                new Point(Terminal.terminal.setPointX(-250), Terminal.terminal.setPointY(-45), 14, Terminal.terminal),
+                new Point(Terminal.terminal.setPointX(-330), Terminal.terminal.setPointY(10), 13, Terminal.terminal)
+            ]);
+        }
+        return Terminal.terminal;
     }
 }
