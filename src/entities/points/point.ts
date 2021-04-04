@@ -22,6 +22,6 @@ export class Point {
     }
 
     public drawPoint(context: Phaser.Scene) {
-        this.gameObjectPoint = context.add.circle(this.getX, this.getY, 10, 0xff0000);
+        this.gameObjectPoint = context.add.circle(this.getX, this.getY, 20, 0xff0000);
     }
 }

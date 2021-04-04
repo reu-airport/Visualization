@@ -16,6 +16,8 @@ export class MainScene extends Phaser.Scene {
     private runwayStrip: RunwayStrip;
     private roads: Roads;
     private busPassage: Vehicle;
+    private busObject: any;
+    private pointObject: any;
 
     constructor() {
         super({
@@ -61,7 +63,9 @@ export class MainScene extends Phaser.Scene {
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
 
-        this.physics.moveToObject(this.busPassage.getTransportObject, ListPoints.getPointByNumber(11).getGameObjectPoint, 50);
+        this.busObject = this.busPassage.getTransportObject;
+        this.pointObject = ListPoints.getPointByNumber(11).getGameObjectPoint;
+        this.physics.moveToObject(this.busObject, this.pointObject, 50);
 
     }
 
@@ -70,6 +74,13 @@ export class MainScene extends Phaser.Scene {
        // let deltaX =  this.busPassage.velocityX(-1);
       //  let deltaY = this.busPassage.velocityY(-1);
       //  this.busPassage.setPositions(this.busPassage.getX, this.busPassage.getY);
+        let collider = this.physics.add.overlap(
+            this.busObject,
+            this.airplaneStation.getLocationObject, (busOnPoint) => {
+                console.log("overlap!");
+                busOnPoint.body.stop();
+                this.physics.world.removeCollider(collider);
+            }, null, this);
     }
 }
 
