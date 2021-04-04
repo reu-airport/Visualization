@@ -6,6 +6,7 @@ import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
+import {ListPoints} from "../entities/points/listPoints";
 
 export class MainScene extends Phaser.Scene {
 
@@ -60,7 +61,7 @@ export class MainScene extends Phaser.Scene {
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
 
-        this.physics.moveToObject(this.busPassage.getTransportObject, this.terminal.getLocationObject, 50);
+        this.physics.moveToObject(this.busPassage.getTransportObject, ListPoints.getPointByNumber(11).getGameObjectPoint, 50);
 
     }
 

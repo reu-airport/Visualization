@@ -15,7 +15,6 @@ export class ListPoints {
     }
 
      public static getPointByNumber(number: number): Point {
-
          for (let i = 0; i < this.points.length; i++) {
              if (this.points[i].getNumberPoint == number) {
                  return this.points[i];

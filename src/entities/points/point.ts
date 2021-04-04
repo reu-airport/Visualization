@@ -6,10 +6,13 @@ export class Point {
     protected Y: number;
     protected numberPoint: number;
     protected location: Location;
+    protected gameObjectPoint: Phaser.GameObjects.GameObject;
 
     public get getX(): number { return this.X; }
     public get getY(): number { return this.Y; }
     public get getNumberPoint(): number { return this.numberPoint }
+    public get getGameObjectPoint(): Phaser.GameObjects.GameObject { return this.gameObjectPoint }
+
 
     constructor(X: number, Y: number, numberPoint: number, location: Location) {
         this.X = X;
@@ -19,6 +22,6 @@ export class Point {
     }
 
     public drawPoint(context: Phaser.Scene) {
-        context.add.circle(this.getX, this.getY, 10, 0xff0000);
+        this.gameObjectPoint = context.add.circle(this.getX, this.getY, 10, 0xff0000);
     }
 }
