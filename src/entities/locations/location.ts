@@ -15,6 +15,8 @@ export abstract class Location {
     public points: Point[];
     public get getLocationX0(): number { return this.locationX0 }
     public get getLocationY0(): number { return this.locationY0 }
+    public get getLocationObject(): Phaser.GameObjects.GameObject { return this.locationObject }
+
 
 
     protected initialize({asset_path, key, locationX0, locationY0, scaleX, scaleY}) {
@@ -36,7 +38,7 @@ export abstract class Location {
     }
 
    public setPosition(context: Phaser.Scene) {
-        this.locationObject = context.add.image(0, 0, this.keyObject);
+        this.locationObject = context.physics.add.image(0, 0, this.keyObject);
         this.locationObject.setScale(this.scaleObjectX, this.scaleObjectY);
         this.locationObject.setY(this.locationY0);
         this.locationObject.setX(this.locationX0);

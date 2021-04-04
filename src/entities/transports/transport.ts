@@ -40,7 +40,7 @@ export abstract class Transport {
     }
 
     public setObject(context: Phaser.Scene) {
-        this.transportObject = context.add.image(0, 0, this.keyObject);
+        this.transportObject = context.physics.add.image(0, 0, this.keyObject);
         this.transportObject.setScale(this.scaleObjectX, this.scaleObjectY);
         this.setPositions(this.X, this.Y);
     }

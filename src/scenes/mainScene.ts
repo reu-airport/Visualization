@@ -60,16 +60,15 @@ export class MainScene extends Phaser.Scene {
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
 
-        //this.physics.moveTo(this.busPassage.getTransportObject, 0,0, 10, 5000);
-
+        this.physics.moveToObject(this.busPassage.getTransportObject, this.terminal.getLocationObject, 50);
 
     }
 
 
     update(time: number, delta: number): void {
-        let deltaX =  this.busPassage.velocityX(-1);
-        let deltaY = this.busPassage.velocityY(-1);
-        this.busPassage.setPositions(this.busPassage.getX, this.busPassage.getY);
+       // let deltaX =  this.busPassage.velocityX(-1);
+      //  let deltaY = this.busPassage.velocityY(-1);
+      //  this.busPassage.setPositions(this.busPassage.getX, this.busPassage.getY);
     }
 }
 
