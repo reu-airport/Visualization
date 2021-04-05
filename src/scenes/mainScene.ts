@@ -18,6 +18,7 @@ export class MainScene extends Phaser.Scene {
     private busPassage: Vehicle;
     private busObject: any;
     private pointObject: any;
+    private pointObject2: any;
 
     constructor() {
         super({
@@ -43,6 +44,8 @@ export class MainScene extends Phaser.Scene {
 
         this.busPassage.preload(this);
 
+        this.load.image('terminal_building', 'src/assets/terminal_building.png');
+        this.load.image('garage_building', 'src/assets/garage_building.png');
     }
 
     create(): void {
@@ -65,6 +68,9 @@ export class MainScene extends Phaser.Scene {
         this.busObject = this.busPassage.getTransportObject;
         this.pointObject = ListPoints.getPointByNumber(13).getGameObjectPoint;
         this.physics.moveToObject(this.busObject, this.pointObject, 100);
+
+        this.add.image(500, 516, 'terminal_building').setScale(0.62, 0.62);
+        this.add.image(1001, 430, 'garage_building').setScale(0.63, 0.63);
     }  
 
 
@@ -82,11 +88,11 @@ export class MainScene extends Phaser.Scene {
         
         var distance = Phaser.Math.Distance.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
         var rotation_angle = Phaser.Math.Angle.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
-
+        
         if (this.busObject.body.speed > 0)
         {
-            this.busObject.rotation = rotation_angle + 3;
-            
+            this.busObject.rotation = rotation_angle + 3.13;
+
             if (distance < 4)
             {
                 this.busObject.body.reset(this.pointObject.x, this.pointObject.y);
