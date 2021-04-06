@@ -17,7 +17,6 @@ export class MainScene extends Phaser.Scene {
     private roads: Roads;
     private busPassage: Vehicle;
     private busObject: any;
-    private pointObject: any;
 
     constructor() {
         super({
@@ -63,35 +62,9 @@ export class MainScene extends Phaser.Scene {
         this.busPassage.setObject(this);
 
         this.busObject = this.busPassage.getTransportObject;
-        this.pointObject = ListPoints.getPointByNumber(13).getGameObjectPoint;
-        this.physics.moveToObject(this.busObject, this.pointObject, 100);
-    }  
-
+    }
 
     update(time: number, delta: number): void {
-       // let deltaX =  this.busPassage.velocityX(-1);
-      //  let deltaY = this.busPassage.velocityY(-1);
-      //  this.busPassage.setPositions(this.busPassage.getX, this.busPassage.getY);
-        // let collider = this.physics.add.overlap(
-        //     this.busObject,
-        //     this.pointObject.getLocationObject, (busOnPoint) => {
-        //         console.log("overlap!");
-        //         busOnPoint.body.stop();
-        //         this.physics.world.removeCollider(collider);
-        //     }, null, this);
-        
-        var distance = Phaser.Math.Distance.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
-        var rotation_angle = Phaser.Math.Angle.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
-
-        if (this.busObject.body.speed > 0)
-        {
-            this.busObject.rotation = rotation_angle + 3;
-            
-            if (distance < 4)
-            {
-                this.busObject.body.reset(this.pointObject.x, this.pointObject.y);
-            }
-        }
+        this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this)
     }
 }
-

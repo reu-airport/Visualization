@@ -11,13 +11,13 @@ export abstract class Transport {
     private readonly asset_path: string;
     private readonly scaleObjectX: number;
     private readonly scaleObjectY: number;
-    private transportObject: Phaser.GameObjects.Image;
+    private transportObject: any;
 
 
     public get getVelocity(): number { return this.velocity; }
     public get getX(): number { return this.X; }
     public get getY(): number { return this.Y; }
-    public get getTransportObject(): Phaser.GameObjects.GameObject { return this.transportObject }
+    public get getTransportObject(): any { return this.transportObject }
 
     public set setVelocity(velocity: number) { this.velocity = velocity; }
     public setX(X: number) { this.X = X; }
