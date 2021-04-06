@@ -6,7 +6,6 @@ import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
-import {ListPoints} from "../entities/points/listPoints";
 
 export class MainScene extends Phaser.Scene {
 
@@ -16,7 +15,7 @@ export class MainScene extends Phaser.Scene {
     private runwayStrip: RunwayStrip;
     private roads: Roads;
     private busPassage: Vehicle;
-    private busObject: any;
+    private followMe: Vehicle;
 
     constructor() {
         super({
@@ -31,6 +30,7 @@ export class MainScene extends Phaser.Scene {
         this.runwayStrip = RunwayStrip.getInstance();
         this.roads = Roads.getInstance();
         this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
+        this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
     }
 
     preload(): void {
@@ -41,6 +41,7 @@ export class MainScene extends Phaser.Scene {
         this.roads.preload(this);
 
         this.busPassage.preload(this);
+        this.followMe.preload(this);
 
     }
 
@@ -60,11 +61,12 @@ export class MainScene extends Phaser.Scene {
         this.roads.setPosition(this);
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
+        this.followMe.setObject(this);
 
-        this.busObject = this.busPassage.getTransportObject;
     }
 
     update(time: number, delta: number): void {
-        this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this)
+        this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this);
+        this.followMe.moveObjectByPoints([13,24,23], this);
     }
 }
