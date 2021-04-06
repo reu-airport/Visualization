@@ -1,6 +1,7 @@
 import {Transport} from "../transport";
 import {TypesVehicle} from "../typesVehicle";
 import {ListPoints} from "../../points/listPoints";
+import {Point} from "../../points/point";
 
 export class Vehicle extends Transport {
     private typeBus: TypesVehicle;
@@ -10,7 +11,6 @@ export class Vehicle extends Transport {
         let getAssetPath = Vehicle.getAssetPathByTypeBus(typesBus);
         let X = point.getX;
         let Y = point.getY;
-
         super({
             asset_path: getAssetPath,
             key: typesBus,
@@ -21,13 +21,10 @@ export class Vehicle extends Transport {
         });
     }
 
-
-    private setOpacity() { }
-
     private static getAssetPathByTypeBus(typesBus: TypesVehicle): string {
         switch (typesBus) {
             case TypesVehicle.FOLLOW_ME:
-                return 'src/assets/follow_me.png';
+                return 'src/assets/folow_me.png';
             case TypesVehicle.BAGGAGE_BUS:
                 return 'src/assets/baggage.png';
             case TypesVehicle.BAGGAGE_LOADER:

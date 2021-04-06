@@ -7,7 +7,6 @@ import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {Airplane} from "../entities/transports/impl/airplane";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
-import {ListPoints} from "../entities/points/listPoints";
 
 export class MainScene extends Phaser.Scene {
 
@@ -22,6 +21,7 @@ export class MainScene extends Phaser.Scene {
     private airplaneObject: any;
     private pointObject: any;
     private pointObject2: any;
+    private followMe: Vehicle;
 
     constructor() {
         super({
@@ -36,7 +36,8 @@ export class MainScene extends Phaser.Scene {
         this.runwayStrip = RunwayStrip.getInstance();
         this.roads = Roads.getInstance();
         this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
-        this.airplane = new Airplane(TypesVehicle.AIRPLANE, 3);
+        this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
+
     }
 
     preload(): void {
@@ -47,7 +48,9 @@ export class MainScene extends Phaser.Scene {
         this.roads.preload(this);
 
         this.busPassage.preload(this);
+        this.followMe.preload(this);
         this.airplane.preload(this);
+
 
         this.load.image('terminal_building', 'src/assets/terminal_building.png');
         this.load.image('garage_building', 'src/assets/garage_building.png');
@@ -69,6 +72,15 @@ export class MainScene extends Phaser.Scene {
         this.roads.setPosition(this);
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
+        this.followMe.setObject(this);
+
+    }
+
+    update(time: number, delta: number): void {
+        this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this);
+        this.followMe.moveObjectByPoints([13,24,23], this);
+
+  /*
         this.airplane.setObject(this);
 
         this.busObject = this.busPassage.getTransportObject;
@@ -82,21 +94,7 @@ export class MainScene extends Phaser.Scene {
         this.add.image(500, 516, 'terminal_building').setScale(0.62, 0.62);
         this.add.image(1001, 430, 'garage_building').setScale(0.63, 0.63);
     }  
-
-
-    update(time: number, delta: number): void {
-       // let deltaX =  this.busPassage.velocityX(-1);
-      //  let deltaY = this.busPassage.velocityY(-1);
-      //  this.busPassage.setPositions(this.busPassage.getX, this.busPassage.getY);
-        // let collider = this.physics.add.overlap(
-        //     this.busObject,
-        //     this.pointObject.getLocationObject, (busOnPoint) => {
-        //         console.log("overlap!");
-        //         busOnPoint.body.stop();
-        //         this.physics.world.removeCollider(collider);
-        //     }, null, this);
-        
-        //тест для машинок
+    //тест для машинок
         var distance = Phaser.Math.Distance.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
         var rotation_angle = Phaser.Math.Angle.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
         
@@ -123,6 +121,7 @@ export class MainScene extends Phaser.Scene {
                 this.airplaneObject.body.reset(this.pointObject2.x, this.pointObject2.y);
             }
          }
+*/ 
+  
     }
 }
-
