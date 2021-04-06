@@ -22,7 +22,7 @@ export class Terminal extends Location {
             });
             Terminal.terminal.initializePoints([
                 new Point(Terminal.terminal.setPointX(-250), Terminal.terminal.setPointY(-45), 14, Terminal.terminal),
-                new Point(Terminal.terminal.setPointX(-330), Terminal.terminal.setPointY(10), 13, Terminal.terminal),
+                new Point(Terminal.terminal.setPointX(-340), Terminal.terminal.setPointY(10), 13, Terminal.terminal),
                 new Point(Terminal.terminal.setPointX(-110), Terminal.terminal.setPointY(50), 15, Terminal.terminal),
                 new Point(Terminal.terminal.setPointX(-10), Terminal.terminal.setPointY(50), 16, Terminal.terminal),
                 new Point(Terminal.terminal.setPointX(70), Terminal.terminal.setPointY(50), 17, Terminal.terminal),

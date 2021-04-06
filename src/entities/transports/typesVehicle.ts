@@ -7,7 +7,6 @@ export enum TypesVehicle {
     BAGGAGE_BUS = 'baggageVan',
     STAIRS = 'stairs',
     VIP_BUS = 'vipShuttle',
-    BAGGAGE_LOADER = 'baggageLoader'
-
-
+    BAGGAGE_LOADER = 'baggageLoader',
+    AIRPLANE = 'airplane'
 }

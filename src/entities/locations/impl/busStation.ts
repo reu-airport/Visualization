@@ -22,7 +22,7 @@ export class BusStation extends Location {
                 });
             BusStation.busStation.initializePoints([
                     new Point(BusStation.busStation.setPointX(10), BusStation.busStation.setPointY(30), 12, BusStation.busStation),
-                    new Point(BusStation.busStation.setPointX(3), BusStation.busStation.setPointY(150), 11, BusStation.busStation)
+                    new Point(BusStation.busStation.setPointX(5), BusStation.busStation.setPointY(150), 11, BusStation.busStation)
                 ]);
             }
             return BusStation.busStation;

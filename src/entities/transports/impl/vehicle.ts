@@ -16,8 +16,8 @@ export class Vehicle extends Transport {
             key: typesBus,
             X: X,
             Y: Y,
-            scaleX: 0.18,
-            scaleY: 0.18
+            scaleX: 0.15,
+            scaleY: 0.15
         });
     }
 
