@@ -4,15 +4,15 @@ import {ListPoints} from "../../points/listPoints";
 
 export class Airplane extends Transport {
 
-    constructor(typesAirplane: TypesVehicle, numberPoint: number) {
+    constructor(numberPoint: number) {
         let point = ListPoints.getPointByNumber(numberPoint);
-        let getAssetPath = Airplane.getAssetPathByTypeBus(typesAirplane);
+        let getAssetPath = Airplane.getAssetPathByTypeBus();
         let X = point.getX;
         let Y = point.getY;
 
         super({
             asset_path: getAssetPath,
-            key: typesAirplane,
+            key: 'airplane',
             X: X,
             Y: Y,
             scaleX: 0.27,
@@ -23,13 +23,10 @@ export class Airplane extends Transport {
 
     private setOpacity() { }
 
-    private static getAssetPathByTypeBus(typesAirplane: TypesVehicle): string {
-        switch (typesAirplane) {
-            case TypesVehicle.AIRPLANE:
-                let rand = Math.random();
-                if (rand > 0.6) return 'src/assets/airplane1.png';
-                else return 'src/assets/airplane2.png'
-        }
+    private static getAssetPathByTypeBus(): string {
+        if (Math.round(Math.random()) === 0)
+            return 'src/assets/airplane1.png';
+        else return 'src/assets/airplane2.png';
     }
 
 }

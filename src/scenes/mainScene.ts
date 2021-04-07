@@ -49,7 +49,7 @@ export class MainScene extends Phaser.Scene {
 
         this.busPassage.preload(this);
         this.followMe.preload(this);
-        this.airplane.preload(this);
+       // this.airplane.preload(this);
 
 
         this.load.image('terminal_building', 'src/assets/terminal_building.png');
