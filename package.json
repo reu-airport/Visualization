@@ -28,6 +28,10 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "@droidsolutions-oss/amqp-ts": "^2.4.1",
+    "amqp-ts": "^1.8.0",
+    "amqplib": "^0.7.1",
+    "express": "^4.17.1",
+    "jackrabbit": "^4.4.0"
   }
 }

@@ -7,6 +7,22 @@ import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {Airplane} from "../entities/transports/impl/airplane";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
+var jackrabbit = require('jackrabbit');
+var url = process.env.CLOUDAMQP_URL || "amqps://avfepwdu:SS4fTAg36RK1hPQAUnyC6TH-4Mf3uyJo@fox.rmq.cloudamqp.com/avfepwdu";
+var message;
+var rabbit = jackrabbit(url);
+var exchange = rabbit.default();
+
+var hello = exchange.queue({ name: 'example_queue', durable: true });
+hello.consume(onMessage);
+
+function onMessage(data,ack) {
+  console.log('received:', data);
+  message = data;
+  console.log(message);
+  console.log(typeof(message));
+  ack("");
+}
 
 export class MainScene extends Phaser.Scene {
 
@@ -23,6 +39,8 @@ export class MainScene extends Phaser.Scene {
     private pointObject2: any;
     private followMe: Vehicle;
 
+    
+
     constructor() {
         super({
             key: 'mainScene'
@@ -37,7 +55,7 @@ export class MainScene extends Phaser.Scene {
         this.roads = Roads.getInstance();
         this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
         this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
-
+        
     }
 
     preload(): void {
@@ -73,7 +91,6 @@ export class MainScene extends Phaser.Scene {
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
         this.followMe.setObject(this);
-
     }
 
     update(time: number, delta: number): void {
