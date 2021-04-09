@@ -32,6 +32,7 @@
     "amqp-ts": "^1.8.0",
     "amqplib": "^0.7.1",
     "express": "^4.17.1",
-    "jackrabbit": "^4.4.0"
+    "jackrabbit": "^4.4.0",
+    "uuid": "^8.3.2"
   }
 }

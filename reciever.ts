@@ -12,6 +12,7 @@ function onMessage(data,ack) {
   message = data;
   console.log(message);
   console.log(typeof(message));
+
   ack("");
 }
 // import * as Amqp from "amqp-ts";

@@ -5,24 +5,9 @@ import {AirplaneStation} from "../entities/locations/impl/airplaneStation";
 import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
-import {Airplane} from "../entities/transports/impl/airplane";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
-var jackrabbit = require('jackrabbit');
-var url = process.env.CLOUDAMQP_URL || "amqps://avfepwdu:SS4fTAg36RK1hPQAUnyC6TH-4Mf3uyJo@fox.rmq.cloudamqp.com/avfepwdu";
-var message;
-var rabbit = jackrabbit(url);
-var exchange = rabbit.default();
+import {GetQueue} from "../messages/getQueue";
 
-var hello = exchange.queue({ name: 'example_queue', durable: true });
-hello.consume(onMessage);
-
-function onMessage(data,ack) {
-  console.log('received:', data);
-  message = data;
-  console.log(message);
-  console.log(typeof(message));
-  ack("");
-}
 
 export class MainScene extends Phaser.Scene {
 
@@ -32,11 +17,6 @@ export class MainScene extends Phaser.Scene {
     private runwayStrip: RunwayStrip;
     private roads: Roads;
     private busPassage: Vehicle;
-    private busObject: any;
-    private airplane: Airplane;
-    private airplaneObject: any;
-    private pointObject: any;
-    private pointObject2: any;
     private followMe: Vehicle;
 
     
@@ -45,6 +25,9 @@ export class MainScene extends Phaser.Scene {
         super({
             key: 'mainScene'
         });
+      //  run().catch(err => console.error(err));
+      //console.log(localStorage.getItem('savefrom-helper-extension'));
+
     }
 
     init(): void {
@@ -67,11 +50,14 @@ export class MainScene extends Phaser.Scene {
 
         this.busPassage.preload(this);
         this.followMe.preload(this);
-       // this.airplane.preload(this);
 
 
         this.load.image('terminal_building', 'src/assets/terminal_building.png');
         this.load.image('garage_building', 'src/assets/garage_building.png');
+      //  this.load.json('message', 'src/rabbitmq/messages.json');
+      //  this.load.json('message', 'http://api.geonames.org/citiesJSON');
+
+
     }
 
     create(): void {
@@ -91,54 +77,30 @@ export class MainScene extends Phaser.Scene {
         this.roads.drawPoints(this);
         this.busPassage.setObject(this);
         this.followMe.setObject(this);
+        this.load.start();
     }
 
     update(time: number, delta: number): void {
         this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this);
         this.followMe.moveObjectByPoints([13,24,23], this);
+        //console.log(GetQueue.getQueue(this));
+        //console.log(this.cache.json.get('message'));
+        /*
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", "http://localhost:3000/test", false );
+        xmlHttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xmlHttp.send( null );
+        console.log(xmlHttp.responseText);
+         */
 
-  /*
-        this.airplane.setObject(this);
+        var j = new XMLHttpRequest();
+        j.open( "GET", "http://api.plos.org/search?q=title:DNA");
+        j.send(null);
+        console.log(j.responseText);
 
-        this.busObject = this.busPassage.getTransportObject;
-        this.pointObject = ListPoints.getPointByNumber(13).getGameObjectPoint;
-        this.physics.moveToObject(this.busObject, this.pointObject, 100);
-
-        this.airplaneObject = this.airplane.getTransportObject;
-        this.pointObject2 = ListPoints.getPointByNumber(1).getGameObjectPoint;
-        this.physics.moveToObject(this.airplaneObject, this.pointObject2, 100);
-
-        this.add.image(500, 516, 'terminal_building').setScale(0.62, 0.62);
-        this.add.image(1001, 430, 'garage_building').setScale(0.63, 0.63);
-    }  
-    //тест для машинок
-        var distance = Phaser.Math.Distance.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
-        var rotation_angle = Phaser.Math.Angle.Between(this.busObject.x, this.busObject.y, this.pointObject.x, this.pointObject.y);
-        
-        if (this.busObject.body.speed > 0)
-        {
-            this.busObject.rotation = rotation_angle + 3.13;
-
-            if (distance < 4)
-            {
-                this.busObject.body.reset(this.pointObject.x, this.pointObject.y);
-            }
-        }
-
-        //тест для самолетов
-        var distance2 = Phaser.Math.Distance.Between(this.airplaneObject.x, this.airplaneObject.y, this.pointObject2.x, this.pointObject2.y);
-        var rotation_angle2 = Phaser.Math.Angle.Between(this.airplaneObject.x, this.airplaneObject.y, this.pointObject2.x, this.pointObject2.y);
-        
-        if (this.airplaneObject.body.speed > 0)
-        {
-            this.airplaneObject.rotation = rotation_angle2 + 1.6;
-
-            if (distance2 < 4)
-            {
-                this.airplaneObject.body.reset(this.pointObject2.x, this.pointObject2.y);
-            }
-         }
-*/ 
-  
     }
+
+   public readMessage (key, type, texture) {
+       this.load.json('message', 'src/rabbitmq/messages.json');
+   }
 }
