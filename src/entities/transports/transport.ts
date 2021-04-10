@@ -70,7 +70,7 @@ export abstract class Transport {
         this.numberPoint1 = numberPoint1;
         this.numberPoint2 = numberPoint2;
 
-        context.physics.moveToObject(this.getTransportObject, point2.getGameObjectPoint, 100);
+        context.physics.moveToObject(this.getTransportObject, point2.getGameObjectPoint, 300);
         let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
         let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
 
@@ -85,7 +85,7 @@ export abstract class Transport {
             if (this.points.length == 0) this.getPointsByNumberPoint(numberPoints);
             if (this.points.length != 0) {
                 let targetPoint: Point = this.points[0];
-                context.physics.moveToObject(this.getTransportObject, targetPoint.getGameObjectPoint, 100);
+                context.physics.moveToObject(this.getTransportObject, targetPoint.getGameObjectPoint, 200);
                 let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
                 let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
 
@@ -108,7 +108,6 @@ export abstract class Transport {
         if (distance < 4)  {
             this.getTransportObject.body.reset(pointObject.x, pointObject.y);
             shifted =  this.points.shift();
-            console.log(this.points.length);
             if (this.points.length == 0) {
                 this.points = [];
                 this.isMove = false;

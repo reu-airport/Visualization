@@ -31,5 +31,4 @@ export class Roads extends Location {
             }
             return Roads.roads;
     }
-
 }

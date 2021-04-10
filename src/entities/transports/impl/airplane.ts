@@ -32,35 +32,21 @@ export class Airplane extends Transport {
     }
 
     public moveBy2PointAirplane(typeAirplane: string, context: Phaser.Scene) {
-        //let point1 = ListPoints.getPointByNumber(numberPoint1);
-        if (typeAirplane === "landing") {
-            this.typeAirplane = "landing";
-            this.numberPointAirplane2 = ListParkingNumberPoints.getNumberPoint();
+        if (typeAirplane === "LANDING") {
+            this.typeAirplane = "LANDING";
+            //this.numberPointAirplane2 = ListParkingNumberPoints.getNumberPoint();
+            this.numberPointAirplane2 = Math.floor(Math.random() * (10 - 3 + 1) + 3);
             if (this.numberPointAirplane2 === undefined) this.numberPointAirplane2 = 4;
             let point2 = ListPoints.getPointByNumber(this.numberPointAirplane2);
             this.point2 = point2;
             this.moveObjectByPoints([25, 2, this.numberPointAirplane2], context);
-        } else if (typeAirplane === "takeoff") {
-            this.typeAirplane = "takeoff";
+        } else if (typeAirplane === "TAKEOFF") {
+            this.typeAirplane = "TAKEOFF";
             ListParkingNumberPoints.setNumberPoint = this.numberPointAirplane2;
             this.numberPointAirplane2 = -1;
             let point2 = ListPoints.getPointByNumber(this.numberPointAirplane2);
             this.moveObjectByPoints([2, 1, this.numberPointAirplane2], context);
         }
-
-
-        /*
-        context.physics.moveToObject(this.getTransportObject, point2.getGameObjectPoint, 100);
-        let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
-        let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
-
-        if (this.getTransportObject.body.speed > 0) {
-            this.getTransportObject.rotation = rotation_angle + 3.13;
-            this.overlapBy2Points(distance, point2.getGameObjectPoint);
-        }
-
-         */
-
     }
 
     private static getAssetPathByTypeBus(): string {

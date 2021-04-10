@@ -103,8 +103,10 @@ export class MainScene extends Phaser.Scene {
                 }
             }
             if (vehicleIsAlreadyExist) {
-                this.vehicles[findedIndexVehicle].setIsMove(true);
-                this.vehicles[findedIndexVehicle].moveBy2Point(vehicleJson.vertexFrom, vehicleJson.vertexTo, this);
+                if (!this.vehicles[findedIndexVehicle].getIsMove) {
+                    this.vehicles[findedIndexVehicle].setIsMove(true);
+                    this.vehicles[findedIndexVehicle].moveBy2Point(vehicleJson.vertexFrom, vehicleJson.vertexTo, this);
+                }
             } else {
                 let vehicle = new Vehicle(vehicleJson.vehicleType, vehicleJson.vertexFrom, vehicleJson.vehicleId);
                 vehicle.setObject(this);
@@ -114,20 +116,35 @@ export class MainScene extends Phaser.Scene {
             }
         } else if (!this.isEmpty(airplaneJson)) {
             for (let i = 0; i < this.airplanes.length; i++) {
-                if (this.airplanes[i].planeId === vehicleJson.planeId) {
+                if (this.airplanes[i].planeId == vehicleJson.planeId) {
                     airplaneIsAlreadyExist = true;
                     findedIndexAirplane = i;
+                    console.log("FOUNDED");
                 }
             }
-            if (airplaneJson.type === "takeoff") {
-                this.airplanes[findedIndexAirplane].setIsMove(true);
+            if (airplaneJson.type === "TAKEOFF") {
+                if (airplaneIsAlreadyExist) {
+                    this.airplanes[findedIndexAirplane].setIsMove(true);
                     this.airplanes[findedIndexAirplane]
-                        .moveBy2PointAirplane("takeoff", this);
+                        .moveBy2PointAirplane("TAKEOFF", this);
+                } else {
+                    let airplane = new Airplane(4, airplaneJson.planeId);
+                    airplane.setIsMove(true);
+                    airplane.setObject(this);
+                    airplane.preload(this);
+                    airplane.moveBy2PointAirplane("TAKEOFF", this);
+                    this.airplanes.push(airplane);
+                }
             } else {
+                if (airplaneIsAlreadyExist) {
+
+                } else {
+
+                }
                 let airplane = new Airplane(-2, airplaneJson.planeId);
                 airplane.setObject(this);
                 airplane.preload(this);
-                airplane.moveBy2PointAirplane( "landing", this);
+                airplane.moveBy2PointAirplane( "LANDING", this);
                 this.airplanes.push(airplane);
             }
         }
