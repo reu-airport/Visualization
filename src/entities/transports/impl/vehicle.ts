@@ -5,8 +5,9 @@ import {Point} from "../../points/point";
 
 export class Vehicle extends Transport {
     private typeBus: TypesVehicle;
+    public idVenicle: string;
 
-    constructor(typesBus: TypesVehicle, numberPoint: number) {
+    constructor(typesBus: TypesVehicle, numberPoint: number, idVenicle: string) {
         let point = ListPoints.getPointByNumber(numberPoint);
         let getAssetPath = Vehicle.getAssetPathByTypeBus(typesBus);
         let X = point.getX;
@@ -19,25 +20,26 @@ export class Vehicle extends Transport {
             scaleX: 0.15,
             scaleY: 0.15
         });
+        this.idVenicle = idVenicle;
     }
 
     private static getAssetPathByTypeBus(typesBus: TypesVehicle): string {
         switch (typesBus) {
-            case TypesVehicle.FOLLOW_ME:
+            case TypesVehicle.followMeVan:
                 return 'src/assets/folow_me.png';
-            case TypesVehicle.BAGGAGE_BUS:
+            case TypesVehicle.baggageVan:
                 return 'src/assets/baggage.png';
-            case TypesVehicle.BAGGAGE_LOADER:
+            case TypesVehicle.baggageLoader:
                 return 'src/assets/baggage_loader.png';
-            case TypesVehicle.BUS:
+            case TypesVehicle.bus:
                 return 'src/assets/bus1.png';
-            case TypesVehicle.FOOD_BUS:
+            case TypesVehicle.cateringTruck:
                 return 'src/assets/food_bus.png';
-            case TypesVehicle.REFUELER:
+            case TypesVehicle.refueler:
                 return 'src/assets/fuel_bus.png';
-            case TypesVehicle.STAIRS:
+            case TypesVehicle.stairs:
                 return 'src/assets/trap.png';
-            case TypesVehicle.VIP_BUS:
+            case TypesVehicle.vipShuttle:
                 return 'src/assets/vip.png';
         }
     }

@@ -6,7 +6,6 @@ import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
-import {GetQueue} from "../messages/getQueue";
 
 
 export class MainScene extends Phaser.Scene {
@@ -18,15 +17,15 @@ export class MainScene extends Phaser.Scene {
     private roads: Roads;
     private busPassage: Vehicle;
     private followMe: Vehicle;
+    private vehicles: Vehicle[];
+    private vehicleTest: Vehicle;
 
-    
 
     constructor() {
         super({
             key: 'mainScene'
         });
-      //  run().catch(err => console.error(err));
-      //console.log(localStorage.getItem('savefrom-helper-extension'));
+      this.vehicles = [];
 
     }
 
@@ -36,8 +35,9 @@ export class MainScene extends Phaser.Scene {
         this.airplaneStation = AirplaneStation.getInstance();
         this.runwayStrip = RunwayStrip.getInstance();
         this.roads = Roads.getInstance();
-        this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
-        this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
+     //   this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
+    //    this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
+     // this.vehicleTest = new Vehicle(TypesVehicle.BUS, 15, "fads");
         
     }
 
@@ -47,9 +47,19 @@ export class MainScene extends Phaser.Scene {
         this.airplaneStation.preload(this);
         this.runwayStrip.preload(this);
         this.roads.preload(this);
+        this.load.image(TypesVehicle.bus, 'src/assets/bus1.png');
+        this.load.image(TypesVehicle.vipShuttle, 'src/assets/vip.png');
+        this.load.image(TypesVehicle.followMeVan, 'src/assets/folow_me.png');
+        this.load.image(TypesVehicle.baggageVan, 'src/assets/baggage.png');
+        this.load.image(TypesVehicle.baggageLoader, 'src/assets/baggage_loader.png');
+        this.load.image(TypesVehicle.cateringTruck, 'src/assets/food_bus.png');
+        this.load.image(TypesVehicle.refueler, 'src/assets/fuel_bus.png');
+        this.load.image(TypesVehicle.stairs, 'src/assets/trap.png');
 
-        this.busPassage.preload(this);
-        this.followMe.preload(this);
+
+
+        //  this.vehicleTest.preload(this);
+        //this.followMe.preload(this);
 
 
         this.load.image('terminal_building', 'src/assets/terminal_building.png');
@@ -75,32 +85,49 @@ export class MainScene extends Phaser.Scene {
 
         this.roads.setPosition(this);
         this.roads.drawPoints(this);
-        this.busPassage.setObject(this);
-        this.followMe.setObject(this);
-        this.load.start();
+        //this.busPassage.setObject(this);
+       // this.followMe.setObject(this);
+       // this.load.start();
+      //  this.vehicleTest.setObject(this);
     }
 
     update(time: number, delta: number): void {
-        this.busPassage.moveObjectByPoints([13,15,16,17,18,19,20,21], this);
-        this.followMe.moveObjectByPoints([13,24,23], this);
-        //console.log(GetQueue.getQueue(this));
-        //console.log(this.cache.json.get('message'));
-        /*
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "http://localhost:3000/test", false );
-        xmlHttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-        xmlHttp.send( null );
-        console.log(xmlHttp.responseText);
-         */
+        //this.vehicleTest.moveBy2Point(15, 17, this);
 
-        var j = new XMLHttpRequest();
-        j.open( "GET", "http://api.plos.org/search?q=title:DNA");
-        j.send(null);
-        console.log(j.responseText);
+        let vehicleIsAlreadyExist = false;
+        let findedIndexVehicle = 0;
+        let vehicleRequest = new XMLHttpRequest();
+        vehicleRequest.open( "GET", "http://localhost:3000/vehicle", false );
+        vehicleRequest.send( null );
+        let vehicleJson = JSON.parse(vehicleRequest.responseText);
 
+        if (!this.isEmpty(vehicleJson)) {
+            for (let i = 0; i < this.vehicles.length; i++) {
+                if (this.vehicles[i].idVenicle === vehicleJson.vehicleId) {
+                    vehicleIsAlreadyExist = true;
+                    findedIndexVehicle = i;
+                }
+            }
+            if (vehicleIsAlreadyExist) {
+                this.vehicles[findedIndexVehicle].setIsMove(true);
+                this.vehicles[findedIndexVehicle].moveBy2Point(vehicleJson.vertexFrom, vehicleJson.vertexTo, this);
+            } else {
+                let vehicle = new Vehicle(vehicleJson.vehicleType, vehicleJson.vertexFrom, vehicleJson.vehicleId);
+                vehicle.setObject(this);
+                vehicle.preload(this);
+                vehicle.moveBy2Point(vehicleJson.vertexFrom, vehicleJson.vertexTo, this);
+                this.vehicles.push(vehicle);
+            }
+        }
+        this.vehicles.forEach((vehicle) => {
+           if (vehicle.getIsMove) vehicle.moveBy2Point(vehicle.numberPoint1, vehicle.numberPoint2, this);
+        });
     }
 
-   public readMessage (key, type, texture) {
-       this.load.json('message', 'src/rabbitmq/messages.json');
-   }
+    public isEmpty(obj) {
+        for (let key in obj) return false;
+
+        return true;
+    }
+
 }

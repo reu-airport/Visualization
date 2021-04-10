@@ -15,6 +15,8 @@ export abstract class Transport {
     private transportObject: any;
     private isMove: boolean;
     private points: Point[];
+    public numberPoint1: number;
+    public numberPoint2: number;
     private isReady: boolean;
 
 
@@ -42,7 +44,7 @@ export abstract class Transport {
         this.scaleObjectY = scaleY;
         this.X = X;
         this.Y = Y;
-        this.isMove = false;
+        this.isMove = true;
         this.isReady = true;
         this.points = [];
     }
@@ -60,6 +62,22 @@ export abstract class Transport {
     public setPositions(X: number, Y: number) {
         this.transportObject.setX(this.X);
         this.transportObject.setY(this.Y);
+    }
+
+    public moveBy2Point(numberPoint1: number, numberPoint2: number, context: Phaser.Scene) {
+        let point1 = ListPoints.getPointByNumber(numberPoint1);
+        let point2 = ListPoints.getPointByNumber(numberPoint2);
+        this.numberPoint1 = numberPoint1;
+        this.numberPoint2 = numberPoint2;
+
+        context.physics.moveToObject(this.getTransportObject, point2.getGameObjectPoint, 100);
+        let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
+        let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
+
+        if (this.getTransportObject.body.speed > 0) {
+            this.getTransportObject.rotation = rotation_angle + 3.13;
+            this.overlapBy2Points(distance, point2.getGameObjectPoint);
+        }
     }
 
     public moveObjectByPoints(numberPoints: number[], context: Phaser.Scene) {
@@ -80,6 +98,12 @@ export abstract class Transport {
         }
     }
 
+    protected overlapBy2Points(distance: number, pointObject: any) {
+        if (distance < 4)  {
+            this.getTransportObject.body.reset(pointObject.x, pointObject.y);
+            this.isMove = false;
+        }
+    }
     protected overlap(distance: number, pointObject: any): Point {
         let shifted: Point;
         if (distance < 4)  {
