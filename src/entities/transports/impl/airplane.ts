@@ -1,10 +1,20 @@
 import {Transport} from "../transport";
 import {TypesVehicle} from "../typesVehicle";
 import {ListPoints} from "../../points/listPoints";
-
+import {Point} from "../../points/point";
+import {ListParkingNumberPoints} from "../../points/listParkingNumberPoints"
 export class Airplane extends Transport {
 
-    constructor(numberPoint: number) {
+    public planeId: string;
+    public point1: Point;
+    public point2: Point;
+    public numberPointAirplane1: number;
+    public numberPointAirplane2: number;
+    public startPoint: Point;
+    public typeAirplane: string;
+    public parkingPoint: string;
+
+    constructor(numberPoint: number, planeId: string) {
         let point = ListPoints.getPointByNumber(numberPoint);
         let getAssetPath = Airplane.getAssetPathByTypeBus();
         let X = point.getX;
@@ -12,16 +22,46 @@ export class Airplane extends Transport {
 
         super({
             asset_path: getAssetPath,
-            key: 'airplane',
+            key: `airplane${Math.round(0.5 + Math.random() * 2)}`,
             X: X,
             Y: Y,
             scaleX: 0.27,
             scaleY: 0.27
         });
+        this.planeId = planeId;
     }
 
+    public moveBy2PointAirplane(typeAirplane: string, context: Phaser.Scene) {
+        //let point1 = ListPoints.getPointByNumber(numberPoint1);
+        if (typeAirplane === "landing") {
+            this.typeAirplane = "landing";
+            this.numberPointAirplane2 = ListParkingNumberPoints.getNumberPoint();
+            if (this.numberPointAirplane2 === undefined) this.numberPointAirplane2 = 4;
+            let point2 = ListPoints.getPointByNumber(this.numberPointAirplane2);
+            this.point2 = point2;
+            this.moveObjectByPoints([25, 2, this.numberPointAirplane2], context);
+        } else if (typeAirplane === "takeoff") {
+            this.typeAirplane = "takeoff";
+            ListParkingNumberPoints.setNumberPoint = this.numberPointAirplane2;
+            this.numberPointAirplane2 = -1;
+            let point2 = ListPoints.getPointByNumber(this.numberPointAirplane2);
+            this.moveObjectByPoints([2, 1, this.numberPointAirplane2], context);
+        }
 
-    private setOpacity() { }
+
+        /*
+        context.physics.moveToObject(this.getTransportObject, point2.getGameObjectPoint, 100);
+        let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
+        let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, point2.getGameObjectPoint.x, point2.getGameObjectPoint.y);
+
+        if (this.getTransportObject.body.speed > 0) {
+            this.getTransportObject.rotation = rotation_angle + 3.13;
+            this.overlapBy2Points(distance, point2.getGameObjectPoint);
+        }
+
+         */
+
+    }
 
     private static getAssetPathByTypeBus(): string {
         if (Math.round(Math.random()) === 0)

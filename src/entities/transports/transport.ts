@@ -81,19 +81,18 @@ export abstract class Transport {
     }
 
     public moveObjectByPoints(numberPoints: number[], context: Phaser.Scene) {
-        if (this.isReady) {
-            this.getPointsByNumberPoint(numberPoints);
-            this.isReady = false;
-        } if (this.points.length != 0) {
-            this.setIsMove(true);
-            let targetPoint: Point = this.points[0];
-            context.physics.moveToObject(this.getTransportObject, targetPoint.getGameObjectPoint, 100);
-            let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
-            let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
+        if (this.isMove) {
+            if (this.points.length == 0) this.getPointsByNumberPoint(numberPoints);
+            if (this.points.length != 0) {
+                let targetPoint: Point = this.points[0];
+                context.physics.moveToObject(this.getTransportObject, targetPoint.getGameObjectPoint, 100);
+                let distance = Phaser.Math.Distance.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
+                let rotation_angle = Phaser.Math.Angle.Between(this.getTransportObject.x, this.getTransportObject.y, targetPoint.getGameObjectPoint.x, targetPoint.getGameObjectPoint.y);
 
-            if (this.getTransportObject.body.speed > 0) {
-                this.getTransportObject.rotation = rotation_angle + 3.13;
-                this.overlap(distance, targetPoint.getGameObjectPoint);
+                if (this.getTransportObject.body.speed > 0) {
+                    this.getTransportObject.rotation = rotation_angle + 3.13;
+                    this.overlap(distance, targetPoint.getGameObjectPoint);
+                }
             }
         }
     }
@@ -109,10 +108,10 @@ export abstract class Transport {
         if (distance < 4)  {
             this.getTransportObject.body.reset(pointObject.x, pointObject.y);
             shifted =  this.points.shift();
-            console.log(shifted);
-            if (this.points[0] === undefined) {
+            console.log(this.points.length);
+            if (this.points.length == 0) {
                 this.points = [];
-                this.setIsMove(false);
+                this.isMove = false;
                 return null;
             }
         }

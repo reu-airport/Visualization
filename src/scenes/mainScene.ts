@@ -6,6 +6,9 @@ import {RunwayStrip} from "../entities/locations/impl/runwayStrip";
 import {Roads} from "../entities/locations/impl/roads";
 import {Vehicle} from "../entities/transports/impl/vehicle";
 import {TypesVehicle} from "../entities/transports/typesVehicle";
+import {Airplane} from "../entities/transports/impl/airplane";
+import {Point} from "../entities/points/point";
+import {ListPoints} from "../entities/points/listPoints";
 
 
 export class MainScene extends Phaser.Scene {
@@ -15,17 +18,15 @@ export class MainScene extends Phaser.Scene {
     private airplaneStation: AirplaneStation;
     private runwayStrip: RunwayStrip;
     private roads: Roads;
-    private busPassage: Vehicle;
-    private followMe: Vehicle;
     private vehicles: Vehicle[];
-    private vehicleTest: Vehicle;
-
+    private airplanes: Airplane[];
 
     constructor() {
         super({
             key: 'mainScene'
         });
       this.vehicles = [];
+      this.airplanes = [];
 
     }
 
@@ -35,10 +36,6 @@ export class MainScene extends Phaser.Scene {
         this.airplaneStation = AirplaneStation.getInstance();
         this.runwayStrip = RunwayStrip.getInstance();
         this.roads = Roads.getInstance();
-     //   this.busPassage = new Vehicle(TypesVehicle.BUS, 12);
-    //    this.followMe = new Vehicle(TypesVehicle.FOLLOW_ME, 12);
-     // this.vehicleTest = new Vehicle(TypesVehicle.BUS, 15, "fads");
-        
     }
 
     preload(): void {
@@ -55,18 +52,13 @@ export class MainScene extends Phaser.Scene {
         this.load.image(TypesVehicle.cateringTruck, 'src/assets/food_bus.png');
         this.load.image(TypesVehicle.refueler, 'src/assets/fuel_bus.png');
         this.load.image(TypesVehicle.stairs, 'src/assets/trap.png');
+        this.load.image('airplane1', 'src/assets/airplane1.png');
+        this.load.image('airplane2', 'src/assets/airplane2.png');
 
-
-
-        //  this.vehicleTest.preload(this);
-        //this.followMe.preload(this);
 
 
         this.load.image('terminal_building', 'src/assets/terminal_building.png');
         this.load.image('garage_building', 'src/assets/garage_building.png');
-      //  this.load.json('message', 'src/rabbitmq/messages.json');
-      //  this.load.json('message', 'http://api.geonames.org/citiesJSON');
-
 
     }
 
@@ -85,14 +77,9 @@ export class MainScene extends Phaser.Scene {
 
         this.roads.setPosition(this);
         this.roads.drawPoints(this);
-        //this.busPassage.setObject(this);
-       // this.followMe.setObject(this);
-       // this.load.start();
-      //  this.vehicleTest.setObject(this);
     }
 
     update(time: number, delta: number): void {
-        //this.vehicleTest.moveBy2Point(15, 17, this);
 
         let vehicleIsAlreadyExist = false;
         let findedIndexVehicle = 0;
@@ -100,6 +87,13 @@ export class MainScene extends Phaser.Scene {
         vehicleRequest.open( "GET", "http://localhost:3000/vehicle", false );
         vehicleRequest.send( null );
         let vehicleJson = JSON.parse(vehicleRequest.responseText);
+
+        let airplaneIsAlreadyExist = false;
+        let findedIndexAirplane = 0;
+        let airplaneRequest = new XMLHttpRequest();
+        airplaneRequest.open( "GET", "http://localhost:3000/airplane", false );
+        airplaneRequest.send( null );
+        let airplaneJson = JSON.parse(airplaneRequest.responseText);
 
         if (!this.isEmpty(vehicleJson)) {
             for (let i = 0; i < this.vehicles.length; i++) {
@@ -118,9 +112,32 @@ export class MainScene extends Phaser.Scene {
                 vehicle.moveBy2Point(vehicleJson.vertexFrom, vehicleJson.vertexTo, this);
                 this.vehicles.push(vehicle);
             }
+        } else if (!this.isEmpty(airplaneJson)) {
+            for (let i = 0; i < this.airplanes.length; i++) {
+                if (this.airplanes[i].planeId === vehicleJson.planeId) {
+                    airplaneIsAlreadyExist = true;
+                    findedIndexAirplane = i;
+                }
+            }
+            if (airplaneJson.type === "takeoff") {
+                this.airplanes[findedIndexAirplane].setIsMove(true);
+                    this.airplanes[findedIndexAirplane]
+                        .moveBy2PointAirplane("takeoff", this);
+            } else {
+                let airplane = new Airplane(-2, airplaneJson.planeId);
+                airplane.setObject(this);
+                airplane.preload(this);
+                airplane.moveBy2PointAirplane( "landing", this);
+                this.airplanes.push(airplane);
+            }
         }
+
         this.vehicles.forEach((vehicle) => {
            if (vehicle.getIsMove) vehicle.moveBy2Point(vehicle.numberPoint1, vehicle.numberPoint2, this);
+        });
+
+        this.airplanes.forEach((airplane) => {
+            if (airplane.getIsMove) airplane.moveBy2PointAirplane(airplane.typeAirplane, this);
         });
     }
 
